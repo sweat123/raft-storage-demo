@@ -1,0 +1,54 @@
+syntax = "proto3"; // proto3 必须加此注解
+
+option java_package = "com.laomei.raft.storage.demo.data";
+option java_outer_classname = "StorageProto";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+
+enum Type {
+  READ = 0;
+  UPDATE = 1;
+  DELETE = 2;
+}
+
+message StorageRequest {
+  Type cmdType = 1;
+
+  ReadRequest readRequest = 2;
+  UpdateRequest updateRequest = 3;
+  DeleteRequest deleteRequest = 4;
+}
+
+message UpdateRequest {
+    string dataJson = 1;
+}
+
+message ReadRequest {
+    repeated string keys = 1;
+}
+
+message DeleteRequest {
+    repeated string keys = 1;
+}
+
+message StorageResponse {
+    string msg = 1;
+    ResponseData data = 2;
+}
+
+message ResponseData {
+    Type cmdType = 1;
+    ReadResponse readResponse = 2;
+    UpdateResponse updateResponse = 3;
+    DeleteResponse deleteResponse = 4;
+}
+
+message ReadResponse {
+    string configs = 1;
+}
+
+message UpdateResponse {
+}
+
+message DeleteResponse {
+}
